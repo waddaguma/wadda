@@ -73,7 +73,6 @@ public class Test01Service {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void deleteTest01() {
 		test01Repository.deleteTgt();
-//		test01Repository.delete();
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -140,8 +139,8 @@ public class Test01Service {
 				test01.setZipCode(rs.getString("zip_code"));
 
 
-//				test01Save.oneSave(test01);
-				test01Repository.insertTgt(test01);
+				test01Save.oneSave(test01);
+//				test01Repository.insertTgt(test01);
 
 			}
 

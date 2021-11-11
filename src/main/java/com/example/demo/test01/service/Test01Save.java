@@ -28,6 +28,7 @@ public class Test01Save {
 			System.out.println(i.getId());
 		
 //			test01Repository.save(i);
+			test01Repository.insertTgt(i);
 			
 			
 		}catch (Exception e) {
