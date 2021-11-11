@@ -64,9 +64,11 @@ public class MemberController {
 	}
 	
 	@ApiOperation("TEST")
-	@RequestMapping("/mysql01")
-	public void mysql01() {
+	@RequestMapping("/jasypt")
+	public void jasyptTest() {
    
-		memberService.processMysql();
+		memberService.jasyptTest01();
 	}
+	
+	
 }
