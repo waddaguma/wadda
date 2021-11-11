@@ -30,11 +30,11 @@ public class MemberSave {
 		try {
 			
 			System.out.println(i.getId());
-			targetMember.setId(i.getId());
-			targetMember.setName(i.getName());
-			targetMember.setActive(i.getActive());
-			targetMember.setZipcode(i.getZipcode());
-			targetMember.setEmail(i.getEmail());
+//			targetMember.setId(i.getId());
+//			targetMember.setName(i.getName());
+//			targetMember.setActive(i.getActive());
+//			targetMember.setZipcode(i.getZipcode());
+//			targetMember.setEmail(i.getEmail());
 
 			System.out.println(targetMember.getId());
 		

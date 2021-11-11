@@ -11,11 +11,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.member.domain.Member;
 import com.example.demo.member.repository.MemberRepository;
 import com.example.demo.nmsmember.repository.NmsRepository;
+import com.example.demo.test01.domain.Test01;
+import com.example.demo.test01.service.Test01Save;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +30,9 @@ public class MemberService {
 
 	@Autowired
 	private MemberSave memberSave;
+	
+	@Autowired
+	private Test01Save test01Save;
 
 	@Autowired
 	private MemberRepository memberRepository;
@@ -61,8 +67,39 @@ public class MemberService {
 		}
 
 	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor=Exception.class)
+	public void deleteMember() {
+		
+		memberRepository.deleteMember();
+
+	}
+
+//	public void memberStart(Member member) {
+//		
+//		memberRepository.truncateMember();
+//		
+//		memberRepository.save(member);
+//
+//	}
 	
-	public void processMemberOracle() {
+	public void memberStart(List<Member> member) {
+		
+//		memberRepository.truncateMember();
+		
+		for(Member addMember : member) {
+			System.out.println(addMember.getName());
+			System.out.println(addMember.getId());
+			
+			memberRepository.save(addMember);
+			
+			
+		}
+	}
+
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor=Exception.class)
+		public void processMemberOracle() {
 		
 		 
 		 
@@ -81,7 +118,7 @@ public class MemberService {
 		 System.out.println("========: " + dataSource.getUrl());
 		 System.out.println("========: " + dataSource.getPassword());
 		 
-		 String query = "select * from member";
+		 String query = "select * from src_member";
 
 	        try(Connection connection = dataSource.getConnection()){
 	            System.out.println(connection);
@@ -94,20 +131,20 @@ public class MemberService {
 	            ResultSet rs = statement.executeQuery(query);
 	            
 	            while(rs.next()){ 
-	        		Member member = new Member();
+	        		Test01 test01 = new Test01(); //tgt_test
 	                System.out.println("name : " + rs.getString("name"));
 	                System.out.println("id : " + rs.getString("id"));
-	                System.out.println("zipcode : " + rs.getString("zipcode"));
+	                System.out.println("zipCode : " + rs.getString("zipCode"));
 	                
 	                
-	                member.setId(rs.getLong("id"));
-	                member.setEmail(rs.getString("email"));
-	                member.setActive(rs.getString("active"));
-	                member.setName(rs.getString("name"));
-	                member.setZipcode(rs.getString("zipcode"));
+//	                test01.setId(rs.getString("id"));
+	                test01.setEMail(rs.getString("eMail"));
+	                test01.setActive(rs.getString("active"));
+	                test01.setName(rs.getString("name"));
+	                test01.setZipCode(rs.getString("zipCode"));
 	                
 	            	
-	            	memberSave.oneSave(member);
+	                test01Save.oneSave(test01);
 	            	
 	                }
 	            
