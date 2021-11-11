@@ -30,6 +30,13 @@ public class Test01Save {
 //			test01Repository.save(i);
 			test01Repository.insertTgt(i);
 			
+			System.out.println("SSSSSSSSSSS");
+			System.out.println("SSSSSSSSSSSxxxxxx");
+			System.out.println("SSSSSSSSSSSxxxxxxlllllllllll");
+			
+			System.out.println("TEST05");
+			
+			
 			
 		}catch (Exception e) {
 			System.out.println("Error");
