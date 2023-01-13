@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.routing.repository.RoutingTest01Repository">
+    <select id="selectTest01" resultType="String">
+        select f01 from pcm_test01 limit 1
+    </select>
+</mapper>

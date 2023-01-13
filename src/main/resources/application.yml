@@ -1,19 +1,26 @@
 spring:
   datasource:
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    password: Mook@2736
-    url: jdbc:log4jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-#    
-    oracle:
-#        driver-class-name: ENC(JDb9mZorNx1OO9YHTZU5Dg8u54qQn0Bf1rakK733oOozcxEbtA7mtQ==)
-#        jdbc-url: ENC(go/cM6ItkbcXncj2obU+wc+rmTH2x6Hc0Ik7IrLjYlsWIGW6ThrSBOKYgl/MnE0I)
-#        username: ENC(9xBLxHfVfjCpcMOgx2g+qQ==)
-#        password: ENC(XKp0btpEVWbkvEt+QkZBPUc5osos2j4L)
-        driver-class-name: oracle.jdbc.driver.OracleDriver
-        jdbc-url: jdbc:oracle:thin:@localhost:1521/ORCL
-        username: system
-        password: Mook@2736
+    hikari:
+      master:
+        driver-class-name: org.postgresql.Driver
+        jdbc-url: jdbc:postgresql://131.186.27.99:5432/postgres
+        username: postgres
+        password: new1234!
+      slave:
+        driver-class-name: org.postgresql.Driver
+        jdbc-url: jdbc:postgresql://131.186.27.99:5432/cm_park
+        username: pcm01
+        password: mook
+##    
+#    oracle:
+##        driver-class-name: ENC(JDb9mZorNx1OO9YHTZU5Dg8u54qQn0Bf1rakK733oOozcxEbtA7mtQ==)
+##        jdbc-url: ENC(go/cM6ItkbcXncj2obU+wc+rmTH2x6Hc0Ik7IrLjYlsWIGW6ThrSBOKYgl/MnE0I)
+##        username: ENC(9xBLxHfVfjCpcMOgx2g+qQ==)
+##        password: ENC(XKp0btpEVWbkvEt+QkZBPUc5osos2j4L)
+#        driver-class-name: oracle.jdbc.driver.OracleDriver
+#        jdbc-url: jdbc:oracle:thin:@localhost:1521/ORCL
+#        username: system
+#        password: Mook@2736
 #    jndi-name: jndi/postgresDS
   
   jpa:
@@ -36,15 +43,9 @@ server:
       charset: utf-8
       enabled: true
       force: true
-      
-mysql:
-  driver-class-name: com.mysql.cj.jdbc.Driver
-  jdbc-url: jdbc:mysql://localhost:3306/example?serverTimezone=UTC&characterEncoding=UTF-8
-  user-name: root
-  password: Mook@2736
 
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml
   
 #logging:
 #  level:
