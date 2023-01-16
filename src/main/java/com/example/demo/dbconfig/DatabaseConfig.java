@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @EnableAutoConfiguration(exclude= {DataSourceAutoConfiguration.class})
 @EnableTransactionManagement
-@MapperScan(basePackages = {"com.example.demo"}, sqlSessionFactoryRef = "routeSqlSessionFactory")
+@MapperScan(basePackages = {"com.example.demo"}, sqlSessionFactoryRef = "sqlSessionFactory")
 public class DatabaseConfig {
 	
 //	Connection conn = null;
@@ -120,14 +120,14 @@ public class DatabaseConfig {
  
 //    -------------- JPA EntityManager -------------------
 //    @Primary
-    @Bean(name = "routeEntityManagerFactory")
+    @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean routeEntityManagerFactory(
     		@Qualifier("dataSource") DataSource dataSource) {
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setDataSource(dataSource);
-        em.setPackagesToScan("com.example.demo");
+        em.setPackagesToScan("com.example.demo.jparouting");
         
         Map<String, Object> properties = new HashMap<>();
         properties.put("hibernate.physical_naming_strategy", SpringPhysicalNamingStrategy.class.getName());
@@ -140,14 +140,15 @@ public class DatabaseConfig {
     }
 //
 ////    @Primary
-    @Bean(name = "routeTransactionManager")
+    @Bean(name = "transactionManager")
     public PlatformTransactionManager routeTransactionManager(
-            @Qualifier("routeEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+            @Qualifier("entityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
 
-        JpaTransactionManager tm = new JpaTransactionManager();
-        tm.setEntityManagerFactory(entityManagerFactory);
-
-        return tm;
+//        JpaTransactionManager jpatm = new JpaTransactionManager();
+//        jpatm.setEntityManagerFactory(entityManagerFactory.getObject());
+//
+//        return jpatm;
+    	return new JpaTransactionManager(entityManagerFactory.getObject());
     }
     
     
@@ -158,7 +159,7 @@ public class DatabaseConfig {
 //    }
     
 //    @Primary
-    @Bean(name = "routeSqlSessionFactory")
+    @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
  
     	SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
@@ -167,7 +168,7 @@ public class DatabaseConfig {
 //    	sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:common/mybatis/config.xml"));
 //    	sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath*:common/mybatis/mappers/**/*.xml"));
 //    	sqlSessionFactoryBean.setTypeHandlersPackage("com.example.sample.config.mybatis");
-    	sqlSessionFactoryBean.setTypeAliasesPackage("com.example");
+    	sqlSessionFactoryBean.setTypeAliasesPackage("com.example.demo");
     	sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResource("classpath:mapper/routingtest01.xml"));
     	
         return sqlSessionFactoryBean.getObject();
